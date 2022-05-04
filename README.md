@@ -1,0 +1,35 @@
+# Setup tips
+
+** How to link a Linear issue to a PR **
+
+Branch name (e.g. "LIN-123" or "username/LIN-123"). To quickly copy branch name for an issue to your clipboard, press Cmd/Ctrl Shift .
+
+Pull request title (e.g. "GitHub Workflow LIN-123")
+
+Pull request description (e.g. Fixes LIN-123, Resolves LIN-123) – it will not work if entered in commits or comments.
+
+When you link a Linear issue to a PR, Linear will:
+
+Create a link to the PR in the Linear issue.
+
+Comment on the PR with a link back to the Linear issue.
+
+Once PR has been opened, Linear will change the status of the issue to "In Progress".
+
+Once PR has been merged, Linear will change the status of the issue as "Done".
+
+Suggested Workflow
+
+Select or create the issue you want to work on next.
+
+Open the command menu (Cmd K on Mac, or Ctrl K on Windows) and select Copy git branch name, or use the shortcut Cmd/Ctrl Shift .
+
+This will copy the git branch name to your clipboard (e.g. username/LIN-123-github-workflow
+
+Paste the branch name to your git checkout command to create a new branch: git checkout -b username/LIN-123-github-workflow
+
+Make your changes and push the branch to GitHub and open a pull request
+
+Once the pull request is open, Linear will comment on the PR and change the issue state to In Progress.
+
+Once the PR merged, Linear will change the status to Done.
