@@ -1,35 +1,45 @@
-# Setup tips
+## Setup tips
 
-** How to link a Linear issue to a PR **
+**_How to setup the project in your local machine_**
 
-Branch name (e.g. "LIN-123" or "username/LIN-123"). To quickly copy branch name for an issue to your clipboard, press Cmd/Ctrl Shift .
+- Setup ssh keys in your local machine.
+- Clone the repo
+  ```
+      git clone git@github.com:Sayantan-s/Project_22.git
+  ```
 
-Pull request title (e.g. "GitHub Workflow LIN-123")
+## How to contribute
 
-Pull request description (e.g. Fixes LIN-123, Resolves LIN-123) – it will not work if entered in commits or comments.
+### **_How to link a Linear issue to a PR_**
 
-When you link a Linear issue to a PR, Linear will:
+- Branch name (e.g. "LIN-123" or "username/LIN-123"). To - quickly copy branch name for an issue to your clipboard, press Cmd/Ctrl Shift .
 
-Create a link to the PR in the Linear issue.
+- Pull request title (e.g. "GitHub Workflow LIN-123")
 
-Comment on the PR with a link back to the Linear issue.
+- Pull request description (e.g. Fixes LIN-123, Resolves LIN-123) – it will not work if entered in commits or comments.
 
-Once PR has been opened, Linear will change the status of the issue to "In Progress".
+### **_When you link a Linear issue to a PR, Linear will:_**
 
-Once PR has been merged, Linear will change the status of the issue as "Done".
+- Create a link to the PR in the Linear issue.
 
-Suggested Workflow
+- Comment on the PR with a link back to the Linear issue.
 
-Select or create the issue you want to work on next.
+- Once PR has been opened, Linear will change the status of the issue to "In Progress".
 
-Open the command menu (Cmd K on Mac, or Ctrl K on Windows) and select Copy git branch name, or use the shortcut Cmd/Ctrl Shift .
+- Once PR has been merged, Linear will change the status of the issue as "Done".
 
-This will copy the git branch name to your clipboard (e.g. username/LIN-123-github-workflow
+### **_Suggested Workflow_**
 
-Paste the branch name to your git checkout command to create a new branch: git checkout -b username/LIN-123-github-workflow
+- Select or create the issue you want to work on next.
 
-Make your changes and push the branch to GitHub and open a pull request
+- Open the command menu (Cmd K on Mac, or Ctrl K on Windows) and select Copy git branch name, or use the shortcut Cmd/Ctrl Shift .
 
-Once the pull request is open, Linear will comment on the PR and change the issue state to In Progress.
+- This will copy the git branch name to your clipboard (e.g. username/LIN-123-github-workflow
 
-Once the PR merged, Linear will change the status to Done.
+- Paste the branch name to your git checkout command to create a new branch: git checkout -b username/LIN-123-github-workflow
+
+- Make your changes and push the branch to GitHub and open a pull request
+
+- Once the pull request is open, Linear will comment on the PR and change the issue state to In Progress.
+
+- Once the PR merged, Linear will change the status to Done.
