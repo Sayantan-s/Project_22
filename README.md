@@ -7,6 +7,35 @@
   ```
       git clone git@github.com:Sayantan-s/Project_22.git
   ```
+- Set up a `.gitignore` file and the following init.
+  ``` # Logs
+  logs
+  _.log
+  npm-debug.log_
+  yarn-debug.log*
+  yarn-error.log*
+  pnpm-debug.log*
+  lerna-debug.log*
+
+node_modules/
+dist/
+dist-ssr/
+\*.local/
+.eslintrc.js/
+.eslintignore/
+
+# Editor directories and files
+
+.vscode/_
+!.vscode/extensions.json
+.idea
+.DS_Store
+_.suo
+_.ntvs_
+_.njsproj
+_.sln
+\*.sw?
+```
 
 ## How to contribute
 
