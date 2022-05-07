@@ -1,9 +1,9 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { Props } from "./Heading.interface";
 import { Component } from "./Heading.style";
 
 function Heading({
-  level = 1,
+  level = "1",
   as = `h${level}`,
   ...rest
 }: PropsWithChildren<Props>) {

@@ -9,6 +9,7 @@ module.exports = {
     "plugin:import/typescript",
     "airbnb",
     "airbnb-typescript",
+    "plugin:prettier:recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -20,7 +21,7 @@ module.exports = {
     project: "tsconfig.eslint.json",
     tsconfigRootDir: __dirname,
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "prettier"],
   rules: {
     "react/jsx-props-no-spreading": "off",
     "react/function-component-definition": "off",
@@ -37,5 +38,6 @@ module.exports = {
     "no-unused-vars": "off",
     "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+    "import/prefer-default-export": "off",
   },
 };

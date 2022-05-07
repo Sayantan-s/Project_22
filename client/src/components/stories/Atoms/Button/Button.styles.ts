@@ -10,15 +10,6 @@ export const Component = styled.button<Props>`
     outline ? ` 2px solid ${theme.colors[color!][300]}` : "none"};
   ${({ variant = "default", color = "primary" }) => {
     switch (variant) {
-      case "default":
-      default:
-        return css`
-          background-color: ${({ theme }) => theme.colors[color][500]};
-          color: ${({ theme }) => theme.colors[color][50]};
-          &:hover {
-            background-color: ${({ theme }) => theme.colors[color][600]};
-          }
-        `;
       case "flat":
         return css`
           background-color: ${({ theme }) => theme.colors[color][100]};
@@ -33,6 +24,15 @@ export const Component = styled.button<Props>`
           color: ${({ theme }) => theme.colors[color][600]};
           &:hover {
             color: ${({ theme }) => theme.colors[color][700]};
+          }
+        `;
+      case "default":
+      default:
+        return css`
+          background-color: ${({ theme }) => theme.colors[color][500]};
+          color: ${({ theme }) => theme.colors[color][50]};
+          &:hover {
+            background-color: ${({ theme }) => theme.colors[color][600]};
           }
         `;
     }
