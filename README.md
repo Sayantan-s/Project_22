@@ -10,7 +10,12 @@
 - Set up a `.gitignore` file and add whatever you find in this link --> [DEKH KYA RAHA HAE, COPY PASTE KAR](/.gitignore)
 
 ## How to contribute
+### **_Start how to contribute_**
 
+- Create a branch from main
+- Add the requested features & push it to the remote repo.
+- Go to the remote repo [Sayantan-s/Project_22](https://github.com/Sayantan-s/Project_22.git)
+- You'll see a yellow warning create PR.
 ### **_How to link a Linear issue to a PR_**
 
 - Branch name (e.g. "LIN-123" or "username/LIN-123"). To - quickly copy branch name for an issue to your clipboard, press Cmd/Ctrl Shift .
