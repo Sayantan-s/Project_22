@@ -8,14 +8,16 @@ import React from "react";
 import { PolymorphicComponentProps } from "../../types/Polymorphic.types";
 
 interface BtnProps {
-  variant?: Variants;
-  color?: Colors;
+  variant: Variants;
+  color: Colors;
   rounded?: Rounded;
   size?: Size;
-  isLoading?: boolean;
-  isDisabled?: boolean;
+  isLoading: boolean;
+  isDisabled: boolean;
   outline?: boolean;
   shadow?: boolean;
+  loadingText?: "loading" | string;
+  spinnerPlacement?: "end" | "start";
 }
 
 export type Props<C extends React.ElementType = "button"> =

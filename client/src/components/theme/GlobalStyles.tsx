@@ -13,6 +13,7 @@ html{
 
 body{
     font-size: 1.4rem;
+    font-family: ${({ theme }) => theme.font};
 }
 
 `;

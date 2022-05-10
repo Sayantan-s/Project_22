@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "Volte";
+  src: url("Volte-Light.eot");
+  src: local("Volte Light"), local("Volte-Light"),
+    url("Volte-Light.eot?#iefix") format("embedded-opentype"),
+    url("Volte-Light.woff2") format("woff2"),
+    url("Volte-Light.woff") format("woff"),
+    url("Volte-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Volte";
+  src: url("Volte-Bold.eot");
+  src: local("Volte Bold"), local("Volte-Bold"),
+    url("Volte-Bold.eot?#iefix") format("embedded-opentype"),
+    url("Volte-Bold.woff2") format("woff2"),
+    url("Volte-Bold.woff") format("woff"),
+    url("Volte-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Volte";
+  src: url("Volte-Medium.eot");
+  src: local("Volte Medium"), local("Volte-Medium"),
+    url("Volte-Medium.eot?#iefix") format("embedded-opentype"),
+    url("Volte-Medium.woff2") format("woff2"),
+    url("Volte-Medium.woff") format("woff"),
+    url("Volte-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Volte";
+  src: url("Volte-Regular.eot");
+  src: local("Volte"), local("Volte-Regular"),
+    url("Volte-Regular.eot?#iefix") format("embedded-opentype"),
+    url("Volte-Regular.woff2") format("woff2"),
+    url("Volte-Regular.woff") format("woff"),
+    url("Volte-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Volte";
+  src: url("Volte-Semibold.eot");
+  src: local("Volte Semibold"), local("Volte-Semibold"),
+    url("Volte-Semibold.eot?#iefix") format("embedded-opentype"),
+    url("Volte-Semibold.woff2") format("woff2"),
+    url("Volte-Semibold.woff") format("woff"),
+    url("Volte-Semibold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}

@@ -1,9 +1,9 @@
-import { Button } from "stories";
+import { Button } from "stories/atoms";
 
 function App() {
   return (
     <div className="App">
-      <Button>Hey there</Button>
+      <Button>sjdks</Button>
     </div>
   );
 }

@@ -1,10 +1,8 @@
-import React from "react";
-import { Props } from "./View.Interface";
-import { Component } from "./View.styles";
+import { ViewAtom } from "./View.Interface";
+import { ComponentView, ComponentStack } from "./View.styles";
 
-export const View = <C extends React.ElementType = "div">({
-  isParent = false,
-  ...rest
-}: Props<C>) => <Component isParent={isParent} {...rest} />;
+export const View: ViewAtom = ({ isParent = false, ...rest }) => (
+  <ComponentView isParent={isParent} {...rest} />
+);
 
-export default View;
+View.Stack = ({ gap = "1", ...rest }) => <ComponentStack {...rest} />;
