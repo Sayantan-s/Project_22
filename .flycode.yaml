@@ -1,0 +1,11 @@
+version: "0.1"
+environments:
+  - name: main
+    branch: main
+    mode: pull-request
+apps:
+  - name: Project_22
+    path: client/
+    text-resources:
+      - path: "*.tsx"
+        format: react-hardcoded
