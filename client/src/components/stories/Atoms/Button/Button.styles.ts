@@ -1,4 +1,4 @@
-import { lighten } from "polished";
+import { darken, lighten } from "polished";
 import styled, { css } from "styled-components";
 import StyleUtils from "../../utils/style.util";
 import { Props } from "./Button.interface";
@@ -31,6 +31,10 @@ export const Component = styled.button<Omit<Props, "isDisabled" | "isLoading">>`
       font-weight : ${({ theme }) => theme.fontWeights.medium};
       border: ${({ theme }) =>
         outline ? ` 2px solid ${theme.colors[color!][300]}` : "none"};
+      transition: 0.3s all;
+      &:active{
+        transform: scale(0.98);
+      }
       &:disabled {
         cursor: default;
       }
@@ -60,10 +64,10 @@ export const Component = styled.button<Omit<Props, "isDisabled" | "isLoading">>`
             return css`
               color: ${({ theme }) => theme.colors[color][50]};
               background: ${({ theme }) =>
-                `linear-gradient(175deg, ${theme.colors[color][400]}, ${lighten(
-                  0.02,
-                  theme.colors[color][600],
-                )})`};
+                `linear-gradient(175deg, ${darken(
+                  0.04,
+                  theme.colors[color][400],
+                )}, ${lighten(0.01, theme.colors[color][600])})`};
               &:disabled {
                 background: ${({ theme }) =>
                   `linear-gradient(175deg, ${
@@ -141,6 +145,10 @@ export const Component = styled.button<Omit<Props, "isDisabled" | "isLoading">>`
         css`
           box-shadow: 0px 5px 15px
             ${({ theme }) => lighten(0.05, theme.colors[color][400])};
+          &:active {
+            box-shadow: 0px 3px 10px
+              ${({ theme }) => lighten(0.05, theme.colors[color][400])};
+          }
         `}
 
       ${() =>
