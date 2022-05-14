@@ -13,9 +13,9 @@ const Template: ComponentStory<typeof Heading> = (args) => (
 export const Default = Template.bind({});
 
 Default.args = {
-  level: 1,
+  level: "1",
   as: "h1",
   children: "There was a brown crow.",
   color: "neutral",
-  strength: 2,
+  strength: 200,
 };

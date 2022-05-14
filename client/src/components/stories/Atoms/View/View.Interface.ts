@@ -1,28 +1,48 @@
-import { PolymorphicComponentProps } from "components/stories/types/Polymorphic.types";
-import { Colors } from "components/stories/types/Styles.types";
+import { PolymorphicComponentPropsWithRef } from "components/stories/types/Polymorphic.types";
+import { Colors, Strength } from "components/stories/types/Styles.types";
 
-interface ViewProps {
+type Display = "flex" | "block" | "inline" | "inline-block" | "inline-flex";
+
+type Justify =
+  | "flex-start"
+  | "center"
+  | "flex-end"
+  | "space-between"
+  | "space-around"
+  | "space-evenly";
+
+type Direction = "row" | "row-reverse" | "column" | "column-reverse";
+
+type AlignItems = "flex-start" | "flex-end" | "center" | "stretch" | "baseline";
+
+type AlignContent =
+  | "stretch"
+  | "center"
+  | "flex-start"
+  | "flex-end"
+  | "space-between"
+  | "space-around";
+
+type Wrap = "nowrap" | "wrap" | "wrap-reverse";
+
+interface FlexProps {
+  justify: Justify;
+  direction: Direction;
+  alignItems: AlignItems;
+  alignContent: AlignContent;
+  wrap: Wrap;
+}
+
+type ExtendFlex<T extends Display> = T extends "flex" | "inline-flex"
+  ? FlexProps
+  : unknown;
+
+type ViewProps<DisplayOfC extends Display = "block"> = {
   isParent?: boolean;
   backgroundColor?: Colors;
-}
+  strength?: Strength;
+  display?: DisplayOfC;
+} & ExtendFlex<DisplayOfC>;
 
-interface StackProps {
-  gap?: "0" | "0.5" | "1" | "2" | "2.5" | "3.5" | string;
-  direction?: "v" | "h";
-}
-
-export type VProps<C extends React.ElementType = "div"> =
-  PolymorphicComponentProps<C, ViewProps>;
-
-export type SProps<C extends React.ElementType = "div"> =
-  PolymorphicComponentProps<C, StackProps>;
-
-type ViewFC = <C extends React.ElementType = "div">(
-  props: VProps<C>,
-) => JSX.Element;
-
-export interface ViewAtom extends ViewFC {
-  Stack?: <C extends React.ElementType = "div">(
-    props: SProps<C>,
-  ) => JSX.Element;
-}
+export type Props<C extends React.ElementType = "div"> =
+  PolymorphicComponentPropsWithRef<C, ViewProps>;

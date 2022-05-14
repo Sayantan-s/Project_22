@@ -13,6 +13,14 @@ export type PolymorphicComponentProps<
 > = React.PropsWithChildren<Props & PassComponentType<C>> &
   Omit<React.ComponentProps<C>, PropsToOmit<C, Props>>;
 
+export type PolymorphicRef<C extends React.ElementType> =
+  React.ComponentPropsWithRef<C>["ref"];
+
+export type PolymorphicComponentPropsWithRef<
+  C extends React.ElementType,
+  Props = {},
+> = PolymorphicComponentProps<C, Props> & { ref?: PolymorphicRef<C> };
+
 export type NoUndefinedField<T> = {
   [P in keyof T]-?: NoUndefinedField<NonNullable<T[P]>>;
 };
