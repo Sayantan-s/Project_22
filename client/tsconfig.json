@@ -21,7 +21,7 @@
       "theme": ["./components/theme"]
     }
   },
-  "include": ["src", "styled.d.ts"],
+  "include": ["src", "styled.d.ts", "types.d.ts"],
   "exclude": ["node_modules", ".vscode"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

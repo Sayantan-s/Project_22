@@ -42,50 +42,67 @@ export const Component = styled.button<Omit<Props, "isDisabled" | "isLoading">>`
         switch (variant) {
           case "flat":
             return css`
-              background-color: ${({ theme }) => theme.colors[color][100]};
-              color: ${({ theme }) => theme.colors[color][600]};
+              background-color: ${({ theme }) => theme.colors[color!][100]};
+              color: ${({ theme }) => theme.colors[color!][600]};
               &:hover {
-                background-color: ${({ theme }) => theme.colors[color][200]};
+                background-color: ${({ theme }) => theme.colors[color!][200]};
               }
               &:disabled {
-                background-color: ${({ theme }) => theme.colors[color][100]};
-                color: ${({ theme }) => lighten(0.3, theme.colors[color][600])};
+                background-color: ${({ theme }) => theme.colors[color!][100]};
+                color: ${({ theme }) =>
+                  lighten(0.3, theme.colors[color!][600])};
               }
             `;
           case "light":
             return css`
               background-color: transparent;
-              color: ${({ theme }) => theme.colors[color][600]};
+              color: ${({ theme }) => theme.colors[color!][600]};
               &:hover {
-                color: ${({ theme }) => theme.colors[color][700]};
+                color: ${({ theme }) => theme.colors[color!][700]};
               }
             `;
           case "gradient":
             return css`
-              color: ${({ theme }) => theme.colors[color][50]};
+              color: ${({ theme }) => theme.colors[color!][50]};
               background: ${({ theme }) =>
                 `linear-gradient(175deg, ${darken(
                   0.04,
-                  theme.colors[color][400],
-                )}, ${lighten(0.01, theme.colors[color][600])})`};
+                  theme.colors[color!][400],
+                )}, ${lighten(0.01, theme.colors[color!][600])})`};
               &:disabled {
                 background: ${({ theme }) =>
                   `linear-gradient(175deg, ${
-                    theme.colors[color][300]
-                  }, ${lighten(0.1, theme.colors[color][600])})`};
+                    theme.colors[color!][300]
+                  }, ${lighten(0.1, theme.colors[color!][600])})`};
               }
+            `;
+          case "glass":
+            return css`
+              color: ${({ theme }) => theme.colors[color!][50]};
+              background: ${({ theme }) =>
+                `linear-gradient(175deg, ${darken(
+                  0.04,
+                  `${theme.colors[color!][400]}10`,
+                )}, ${lighten(0.01, `${theme.colors[color!][600]}10`)})`};
+              &:disabled {
+                background: ${({ theme }) =>
+                  `linear-gradient(175deg, ${
+                    theme.colors[color!][300]
+                  }, ${lighten(0.1, theme.colors[color!][600])})`};
+              }
+              backdrop-filter: blur(24px);
             `;
           case "default":
           default:
             return css`
-              background-color: ${({ theme }) => theme.colors[color][500]};
-              color: ${({ theme }) => theme.colors[color][50]};
+              background-color: ${({ theme }) => theme.colors[color!][500]};
+              color: ${({ theme }) => theme.colors[color!][50]};
               &:hover {
-                background-color: ${({ theme }) => theme.colors[color][600]};
+                background-color: ${({ theme }) => theme.colors[color!][600]};
               }
               &:disabled {
                 background-color: ${({ theme }) =>
-                  lighten(0.08, theme.colors[color][500])};
+                  lighten(0.08, theme.colors[color!][500])};
               }
             `;
         }
@@ -144,10 +161,10 @@ export const Component = styled.button<Omit<Props, "isDisabled" | "isLoading">>`
         shadow &&
         css`
           box-shadow: 0px 5px 15px
-            ${({ theme }) => lighten(0.05, theme.colors[color][400])};
+            ${({ theme }) => lighten(0.05, theme.colors[color!][400])};
           &:active {
             box-shadow: 0px 3px 10px
-              ${({ theme }) => lighten(0.05, theme.colors[color][400])};
+              ${({ theme }) => lighten(0.05, theme.colors[color!][400])};
           }
         `}
 

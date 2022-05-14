@@ -5,15 +5,15 @@ import {
   Variants,
 } from "components/stories/types/Styles.types";
 import React from "react";
-import { PolymorphicComponentProps } from "../../types/Polymorphic.types";
+import { PolymorphicComponentPropsWithRef } from "../../types/Polymorphic.types";
 
-interface BtnProps {
-  variant: Variants;
-  color: Colors;
+export interface BtnProps {
+  variant?: Variants | "glass";
+  color?: Colors;
   rounded?: Rounded;
   size?: Size;
-  isLoading: boolean;
-  isDisabled: boolean;
+  isLoading?: boolean;
+  isDisabled?: boolean;
   outline?: boolean;
   shadow?: boolean;
   loadingText?: "loading" | string;
@@ -21,4 +21,4 @@ interface BtnProps {
 }
 
 export type Props<C extends React.ElementType = "button"> =
-  PolymorphicComponentProps<C, BtnProps>;
+  PolymorphicComponentPropsWithRef<C, BtnProps>;

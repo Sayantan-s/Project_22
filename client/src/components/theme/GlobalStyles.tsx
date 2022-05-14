@@ -14,6 +14,7 @@ html{
 body{
     font-size: 1.4rem;
     font-family: ${({ theme }) => theme.font};
+    font-weight : ${({ theme }) => theme.fontWeights.medium}
 }
 
 `;

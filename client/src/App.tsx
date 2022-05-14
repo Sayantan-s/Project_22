@@ -1,10 +1,12 @@
-import { Button } from "stories/atoms";
+import { Button, View } from "stories";
 
 function App() {
   return (
-    <div className="App">
-      <Button>sjdks</Button>
-    </div>
+    <View isParent>
+      <Button variant="gradient" rounded="full" shadow>
+        Create
+      </Button>
+    </View>
   );
 }
 
