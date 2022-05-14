@@ -15,4 +15,12 @@ export const Component = styled.div<Props>`
             margin-left: ${() => (gap?.endsWith("px") ? gap : `${gap}rem`)};
           }
         `}
+  ${({ backgroundColor, strength }) =>
+    backgroundColor &&
+    css`
+      background-color: ${({ theme }) =>
+        backgroundColor
+          ? theme.colors[backgroundColor!][strength || 100]
+          : "none"};
+    `}
 `;
