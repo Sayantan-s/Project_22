@@ -5,7 +5,7 @@ import {
   Variants,
 } from "components/stories/types/Styles.types";
 import React from "react";
-import { PolymorphicComponentPropsWithRef } from "../../types/Polymorphic.types";
+import { PolymorphicComponentProps } from "../../types/Polymorphic.types";
 
 export interface BtnProps {
   variant?: Variants | "glass";
@@ -21,4 +21,4 @@ export interface BtnProps {
 }
 
 export type Props<C extends React.ElementType = "button"> =
-  PolymorphicComponentPropsWithRef<C, BtnProps>;
+  PolymorphicComponentProps<C, BtnProps>;

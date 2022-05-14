@@ -17,6 +17,8 @@
   "dependencies": {
     "@react-theming/storybook-addon": "^1.1.5",
     "@types/styled-components": "^5.1.25",
+    "@types/webrtc": "^0.0.32",
+    "axios": "^0.27.2",
     "framer-motion": "^6.3.3",
     "polished": "^4.2.2",
     "react": "^18.0.0",

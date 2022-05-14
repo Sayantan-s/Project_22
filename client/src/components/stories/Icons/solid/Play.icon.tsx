@@ -1,7 +1,7 @@
 import { useTheme } from "styled-components";
 import { IconType } from "../Icon.interface";
 
-const Play: IconType = ({ size = "24", color, strength }) => {
+export const Play: IconType = ({ size = "24", color, strength }) => {
   const { colors } = useTheme();
   return (
     <svg
@@ -18,5 +18,3 @@ const Play: IconType = ({ size = "24", color, strength }) => {
     </svg>
   );
 };
-
-export default Play;

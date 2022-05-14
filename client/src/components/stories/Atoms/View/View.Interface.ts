@@ -25,24 +25,17 @@ type AlignContent =
 
 type Wrap = "nowrap" | "wrap" | "wrap-reverse";
 
-interface FlexProps {
-  justify: Justify;
-  direction: Direction;
-  alignItems: AlignItems;
-  alignContent: AlignContent;
-  wrap: Wrap;
-}
-
-type ExtendFlex<T extends Display> = T extends "flex" | "inline-flex"
-  ? FlexProps
-  : unknown;
-
-type ViewProps<DisplayOfC extends Display = "block"> = {
+type ViewProps = {
   isParent?: boolean;
   backgroundColor?: Colors;
   strength?: Strength;
-  display?: DisplayOfC;
-} & ExtendFlex<DisplayOfC>;
+  display?: Display;
+  justify?: Justify;
+  direction?: Direction;
+  alignItems?: AlignItems;
+  alignContent?: AlignContent;
+  wrap?: Wrap;
+};
 
 export type Props<C extends React.ElementType = "div"> =
   PolymorphicComponentPropsWithRef<C, ViewProps>;

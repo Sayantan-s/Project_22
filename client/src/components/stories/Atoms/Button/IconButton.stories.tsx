@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import Play from "../../Icons/solid/Play.icon";
+import { Play } from "../../Icons/solid";
 
 import { IconButton } from "./IconButton";
 
