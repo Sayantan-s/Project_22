@@ -14,7 +14,12 @@ html{
 body{
     font-size: 1.4rem;
     font-family: ${({ theme }) => theme.font};
-    font-weight : ${({ theme }) => theme.fontWeights.medium}
+    font-weight : ${({ theme }) => theme.fontWeights.medium};
+    height : 100vh;
+    width :100%;
+    #root {
+        height: 100%;
+    }
 }
 
 `;

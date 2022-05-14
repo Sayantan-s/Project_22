@@ -2,7 +2,7 @@ import { Colors, Strength } from "../types/Styles.types";
 
 export interface IconProps {
   color: Colors;
-  size: "24" | "32" | "48";
+  size: "16" | "24" | "32" | "48";
   strength?: Strength;
 }
 

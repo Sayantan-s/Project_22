@@ -15,12 +15,19 @@ export const Component = styled.div<Props>`
             margin-left: ${() => (gap?.endsWith("px") ? gap : `${gap}rem`)};
           }
         `}
-  ${({ backgroundColor, strength }) =>
+  ${({ backgroundColor, strength, glass }) =>
     backgroundColor &&
     css`
       background-color: ${({ theme }) =>
         backgroundColor
-          ? theme.colors[backgroundColor!][strength || 100]
+          ? `${theme.colors[backgroundColor!][strength || 100]}${
+              glass ? "50" : ""
+            }`
           : "none"};
+      ${() =>
+        glass &&
+        css`
+          backdrop-filter: blur(24px);
+        `}
     `}
 `;

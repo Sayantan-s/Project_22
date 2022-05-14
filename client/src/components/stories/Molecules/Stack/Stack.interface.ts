@@ -6,6 +6,7 @@ interface StackProps {
   direction?: "v" | "h";
   backgroundColor?: Colors;
   strength?: Strength;
+  glass?: boolean;
 }
 export type Props<C extends React.ElementType = "div"> =
   PolymorphicComponentPropsWithRef<C, StackProps>;

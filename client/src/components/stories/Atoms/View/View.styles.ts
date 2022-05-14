@@ -7,9 +7,19 @@ export const Component = styled.div<Props>`
     css`
       max-width: 144rem;
       margin: 0 auto;
+      height: 100%;
     `}
 
-  ${({ backgroundColor, strength, display }) => css`
+  ${({
+    backgroundColor,
+    strength,
+    display,
+    wrap,
+    justify,
+    alignContent,
+    alignItems,
+    direction,
+  }) => css`
     background-color: ${({ theme }) =>
       backgroundColor
         ? theme.colors[backgroundColor][strength || 100]
@@ -19,6 +29,15 @@ export const Component = styled.div<Props>`
       display &&
       css`
         display: ${() => display};
+      `}
+    ${() =>
+      display === "flex" &&
+      css`
+        justify-content: ${justify};
+        flex-wrap: ${wrap};
+        align-content: ${alignContent};
+        align-items: ${alignItems};
+        flex-direction: ${direction};
       `}
   `}
 `;

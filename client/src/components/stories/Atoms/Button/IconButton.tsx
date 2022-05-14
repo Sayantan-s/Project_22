@@ -12,6 +12,7 @@ export const IconButton = forwardRef(
       isDisabled = false,
       variant = "default",
       color = "primary",
+      size,
       ...rest
     }: Props<C>,
     ref?: PolymorphicRef<C>,
@@ -20,6 +21,7 @@ export const IconButton = forwardRef(
       variant={variant}
       color={color}
       disabled={isDisabled}
+      size={size}
       {...rest}
       ref={ref}
     >
@@ -32,7 +34,7 @@ export const IconButton = forwardRef(
         />
       ) : (
         <Icon
-          size={"24"}
+          size={size === "xs" ? "16" : "24"}
           color={color}
           strength={variant === "default" || variant === "gradient" ? 50 : 600}
         />

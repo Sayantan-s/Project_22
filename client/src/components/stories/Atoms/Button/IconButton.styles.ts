@@ -82,13 +82,13 @@ export const Component = styled.button<
               background: ${({ theme }) =>
                 `linear-gradient(175deg, ${darken(
                   0.04,
-                  `${theme.colors[color!][400]}10`,
-                )}, ${lighten(0.01, `${theme.colors[color!][600]}10`)})`};
+                  `${theme.colors[color!][400]}50`,
+                )}, ${lighten(0.01, `${theme.colors[color!][600]}50`)})`};
               &:disabled {
                 background: ${({ theme }) =>
                   `linear-gradient(175deg, ${
-                    theme.colors[color!][300]
-                  }, ${lighten(0.1, theme.colors[color!][600])})`};
+                    theme.colors[color!][200]
+                  }, ${lighten(0.1, theme.colors[color!][300])})`};
               }
               backdrop-filter: blur(24px);
             `;
