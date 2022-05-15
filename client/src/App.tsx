@@ -1,4 +1,10 @@
-import { Play, ClickPhoto, Stop } from "./components/stories/Icons/solid";
+import {
+  Play,
+  ClickPhoto,
+  Stop,
+  CameraOff,
+  CameraOn,
+} from "./components/stories/Icons/solid";
 import { useEffect, useRef, useState } from "react";
 import { IconButton, Stack, View } from "stories";
 import styled from "styled-components";
@@ -9,15 +15,16 @@ interface CameraConfig {
 }
 
 function App() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const cameraCanvasRef = useRef<HTMLCanvasElement>(null);
-
-  const [camera, setCamera] = useState<CameraConfig>({
+  const [isCameraOpen, setIsCameraOpen] = useState<boolean>(false);
+  const [isRecording, setRecording] = useState<boolean>(false);
+  const [videoStream, setVideoStream] = useState<CameraConfig>({
     status: "initial",
     errorText: "",
   });
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
 
-  const [isRecording, setRecording] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const cameraCanvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     navigator.getUserMedia =
@@ -31,10 +38,10 @@ function App() {
   }, []);
 
   const handleStartCamera = () => {
-    if (camera.status === "ready" || camera.status === "loading") {
+    if (videoStream.status === "ready" || videoStream.status === "loading") {
       return;
     }
-    setCamera((prevState) => ({ ...prevState, status: "loading" }));
+    setVideoStream((prevState) => ({ ...prevState, status: "loading" }));
     navigator.getUserMedia(
       {
         audio: false,
@@ -44,15 +51,19 @@ function App() {
         },
       },
       (stream) => {
-        let video = videoRef.current!;
-        video.srcObject = stream;
-        video.onloadedmetadata = () => {
-          setCamera((prevState) => ({ ...prevState, status: "ready" }));
-          setTimeout(() => video.play(), 0);
-        };
+        if (!isCameraOpen) {
+          let video = videoRef.current!;
+          video.srcObject = stream;
+          setLocalStream(stream);
+          setIsCameraOpen(true);
+          video.onloadedmetadata = () => {
+            setVideoStream((prevState) => ({ ...prevState, status: "ready" }));
+            setTimeout(() => video.play(), 0);
+          };
+        }
       },
       (err) => {
-        setCamera((prevState) => ({
+        setVideoStream((prevState) => ({
           ...prevState,
           status: "failed",
           errorText: err.message || "Failed to start",
@@ -65,20 +76,32 @@ function App() {
     setRecording((prevState) => !prevState);
   };
 
-  const CaptureCanavasPhoto = () => {
+  const handleCameraToggle = () => {
+    const videoTrack = localStream
+      ?.getTracks()
+      .find((track) => track.kind === "video")!;
+    if (videoTrack.enabled) {
+      videoTrack.enabled = false;
+      setIsCameraOpen(false);
+      return;
+    }
+    videoTrack.enabled = true;
+    setIsCameraOpen(true);
+  };
+
+  const handleCaptureCanvasPhoto = () => {
     const canvas = cameraCanvasRef.current!;
     canvas
       .getContext("2d")
       ?.drawImage(videoRef.current!, 0, 0, canvas.width, canvas.height);
 
     const base64ImageDataUrl = canvas.toDataURL("image/webp");
-    console.log(base64ImageDataUrl);
   };
 
   return (
     <View isParent display="flex" alignItems="center" justify="center">
       <VideoPlayer>
-        <View as="video" autoplay ref={videoRef} />
+        <Video autoPlay ref={videoRef} />
         <Canvas as="canvas" ref={cameraCanvasRef} />
         <PlayerControls backgroundColor="primary" glass>
           <IconButton
@@ -94,9 +117,16 @@ function App() {
               size="xs"
               rounded="full"
               variant="gradient"
-              onClick={CaptureCanavasPhoto}
+              onClick={handleCaptureCanvasPhoto}
             />
           )}
+          <IconButton
+            icon={isCameraOpen ? CameraOff : CameraOn}
+            size="xs"
+            rounded="full"
+            variant="gradient"
+            onClick={handleCameraToggle}
+          />
         </PlayerControls>
       </VideoPlayer>
     </View>
@@ -120,13 +150,20 @@ const Canvas = styled(View)`
   width: 100%;
   height: 100%;
   z-index: -1;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 `;
 
 const PlayerControls = styled(Stack)`
   position: absolute;
   margin: 0 auto;
-  bottom: 1rem;
-  left: 1rem;
+  bottom: 1.5rem;
+  left: 1.5rem;
   padding: 0.8rem;
   border-radius: 5rem;
+`;
+
+const Video = styled.video`
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 `;
