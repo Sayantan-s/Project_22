@@ -96,10 +96,12 @@ function App() {
       ?.drawImage(videoRef.current!, 0, 0, canvas.width, canvas.height);
 
     const base64ImageDataUrl = canvas.toDataURL("image/webp");
+
+    console.log(base64ImageDataUrl);
   };
 
   return (
-    <View isParent display="flex" alignItems="center" justify="center">
+    <View isParent>
       <VideoPlayer>
         <Video autoPlay ref={videoRef} />
         <Canvas as="canvas" ref={cameraCanvasRef} />
