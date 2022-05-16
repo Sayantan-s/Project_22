@@ -20,7 +20,7 @@ def load_model():
     return {
         "status" : "failed"
     }
-   
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
