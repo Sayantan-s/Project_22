@@ -74,7 +74,7 @@ def crop_and_save_image(img_path, write_img_path):
 @app.route('/predict/', methods=['GET', 'POST'])
 def predict():
     imgData = request.get_data()
-    convertImage(imgData)
+    crop_and_save_image(imgData)
     image = imageio.imread('output.png', mode='L')
     image = resize(image, (MAX_WIDTH, MAX_HEIGHT))
     image = 255 * image
