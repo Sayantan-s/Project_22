@@ -20,11 +20,21 @@ def load_model():
     return {
         "status" : "failed"
     }
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> 52b3f263c2f5361306eb22c98afbed431733d642
 
 @app.route("/predict", methods=["POST"])
 def predict():
 
+<<<<<<< HEAD
+=======
+    requestFromFrontend = "array"
+
+
+>>>>>>> 52b3f263c2f5361306eb22c98afbed431733d642
     """
        Code for Predict model
     """
