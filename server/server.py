@@ -65,15 +65,15 @@ def crop_and_save_image(img_path, write_img_path):
         roi = gray[y:y+h, x:x+w]
         roi = imutils.resize(roi, width=250, inter=cv2.INTER_CUBIC)
         # saving image to path
-        print('/content/gdrive/MyDrive/Lip Reading/cropped_small/' + write_img_path)
+        print('/images/' + write_img_path)
         cv2.imwrite(
-            '/content/gdrive/MyDrive/Lip Reading/cropped_small/' + write_img_path, roi)
+            '/images/' + write_img_path, roi)
 
 
 @app.route('/predict/', methods=['GET', 'POST'])
 def predict():
     imgData = request.get_data()
-    crop_and_save_image(imgData)
+    crop_and_save_image(img_path="imgData", write_img_path="any_path")
     image = imageio.imread('output.png', mode='L')
     image = resize(image, (MAX_WIDTH, MAX_HEIGHT))
     image = 255 * image
