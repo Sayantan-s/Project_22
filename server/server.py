@@ -1,12 +1,12 @@
-from ctypes import resize
+import sys
+sys.path.insert(0, 'E:\Project_22\model')
 from load import *
+from ctypes import resize
 from flask import Flask, render_template, request
-from model.load import init
-from scipy.misc import imsave, imread, imresize
 import numpy as np
 import keras.models
 import re
-import sys
+
 import os
 import base64
 import os
@@ -15,7 +15,6 @@ import dlib  # run "pip install dlib"
 import cv2  # run "pip install opencv-python"
 import imageio
 from imutils import face_utils
-sys.path.append(os.path.abspath("./model"))
 
 
 global graph, model
