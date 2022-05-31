@@ -158,8 +158,9 @@ def predict():
         print(out)
         print(np.argmax(out, axis=1))
 
-        response = np.array_str(np.argmax(out, axis=1))
-        return response
+        response = int(np.array(np.argmax(out, axis=1)))
+        
+        return classes[response]
     
     # out = model.predict(image)
     # print(out)
