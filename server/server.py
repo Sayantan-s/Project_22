@@ -16,24 +16,44 @@ import cv2  # run "pip install opencv-python"
 import imageio
 from imutils import face_utils
 
-
 global graph, model
 MAX_WIDTH, MAX_HEIGHT = 64, 64
 
-model, graph = init()
-
 app = Flask(__name__)
-
 
 @app.route('/')
 def index_view():
     return render_template('index.html')
-
-
+    
 # def convertImage(imgData1):
 #     imgstr = re.search(b'base64,(.*)', imgData1).group(1)
 #     with open('output.png', 'wb') as output:
 #         output.write(base64.b64decode(imgstr))
+
+
+@app.route("/load_model")
+def load_model():
+
+    model_is_loaded = False
+
+    """
+        Code for loading model
+        init() is in load.py in model folder
+    """
+    model, graph = init()   
+    print("model_loaded")
+
+    if model != None:
+        model_is_loaded = True
+    
+    if model_is_loaded:
+        return{
+            "status": "ok"
+        }
+
+    return {
+        "status": "failed"
+    }
 
 
 def crop_and_save_image(img_path, write_img_path):
