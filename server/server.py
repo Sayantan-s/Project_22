@@ -1,12 +1,11 @@
-from ctypes import resize
+import sys
+sys.path.insert(0, 'E:\Project_22\model')
 from load import *
+from ctypes import resize
 from flask import Flask, render_template, request
-from model.load import init
-from scipy.misc import imsave, imread, imresize
 import numpy as np
 import keras.models
 import re
-import sys
 import os
 import base64
 import os
@@ -15,29 +14,55 @@ import dlib  # run "pip install dlib"
 import cv2  # run "pip install opencv-python"
 import imageio
 from imutils import face_utils
-sys.path.append(os.path.abspath("./model"))
 
 
+model_name = "EF-3"
+models_dir = './model/models/'
+model_path = models_dir + model_name + '.json'
+model_weights_path = models_dir + model_name + '.h5'
 global graph, model
-MAX_WIDTH, MAX_HEIGHT = 64, 64
-
-model, graph = init()
+MAX_WIDTH, MAX_HEIGHT, max_seq_length = 64, 64, 22
+classes = ['Begin', 'Choose', 'Connection', 'Navigation',
+            'Next', 'Previous', 'Start', 'Stop', 'Hello', 'Web']
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def index_view():
     return render_template('index.html')
-
-
+    
 # def convertImage(imgData1):
 #     imgstr = re.search(b'base64,(.*)', imgData1).group(1)
 #     with open('output.png', 'wb') as output:
 #         output.write(base64.b64decode(imgstr))
 
+@app.route("/load_model")
+def load_model():
 
-def crop_and_save_image(img_path, write_img_path):
+    model_is_loaded = False
+
+    """
+        Code for loading model
+        init() is in load.py in model folder
+    """
+    model, graph = init()   
+    print("model loaded")
+
+    if (model != None) and (graph != None):
+        model_is_loaded = True
+    
+    if model_is_loaded:
+        return{
+            "status": "ok"
+        }
+
+    return {
+        "status": "failed"
+    }
+
+
+def crop_and_save_image(img, img_path, write_img_path, img_name):
+
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor(
         'E:\Project_22\model\shape_predictor_81_face_landmarks.dat')
@@ -66,28 +91,83 @@ def crop_and_save_image(img_path, write_img_path):
         roi = gray[y:y+h, x:x+w]
         roi = imutils.resize(roi, width=250, inter=cv2.INTER_CUBIC)
         # saving image to path
-        print('/content/gdrive/MyDrive/Lip Reading/cropped_small/' + write_img_path)
-        cv2.imwrite(
-            '/content/gdrive/MyDrive/Lip Reading/cropped_small/' + write_img_path, roi)
+        print(write_img_path)
+        cv2.imwrite(write_img_path, roi)
 
 
 @app.route('/predict/', methods=['GET', 'POST'])
 def predict():
     imgData = request.get_data()
-    crop_and_save_image(imgData)
-    image = imageio.imread('output.png', mode='L')
-    image = resize(image, (MAX_WIDTH, MAX_HEIGHT))
-    image = 255 * image
-    image = np.expand_dims(image, axis=4)    
+    raw_directory = 'server/raw_images'
+    final_diretory = 'E:\Project_22\server\/final_image'
+    filelist = os.listdir(raw_directory)
+    final_filelist = os.listdir(final_diretory)
+    for img_name in filelist:
+        if img_name.startswith('color'):
+            image = imageio.v2.imread(raw_directory + '/' + '' + img_name)
+            crop_and_save_image(image, raw_directory + '/' + '' + img_name,
+                                final_diretory + '/' + '' + img_name, img_name)
+            print("function running")
 
+    '''
+    converting frames into image_sequence for one word
+    '''
+    sequence = []
+    image_sequence = []
+    for image_name in final_filelist:
+        if image_name.startswith('color'):
+            image = imageio.v2.imread(final_diretory + '/' + image_name)
+            image = cv2.resize(image, (MAX_WIDTH, MAX_HEIGHT))
+            image = 255 * image
+            image = image.astype(np.uint8)
+            sequence.append(image)
+    pad_array = [np.zeros((MAX_WIDTH, MAX_HEIGHT))]
+    sequence.extend(pad_array * (max_seq_length - len(sequence)))
+    sequence = np.array(sequence)
+    image_sequence = np.array([sequence])
+
+    def normalize_it(X):
+        v_min = X.min(axis=(2, 3), keepdims=True)
+        v_max = X.max(axis=(2, 3), keepdims=True)
+        X = (X - v_min)/(v_max - v_min)
+        X = np.nan_to_num(X)
+        return X
+    
+    image_sequence = normalize_it(image_sequence)
+    image_sequence = np.expand_dims(image_sequence, axis=4)
+    print(image_sequence.shape)
+    
+    model, graph = init()
     with graph.as_default():
-        out = model.predict(image)
+        json_file = open(model_path, 'r')
+        loaded_model_json = json_file.read()
+        json_file.close()
+
+        # use Keras model_from_json to make a loaded model
+        loaded_model = model_from_json(loaded_model_json)
+
+        #load weights into new model
+        loaded_model.load_weights(model_weights_path)
+        print("Loaded Model from disk")
+
+        # compile and evaluate loaded model
+        opt = tf.keras.optimizers.Adam(learning_rate=0.0001)
+        loaded_model.compile(loss='categorical_crossentropy',
+                            optimizer=opt, metrics=['accuracy'])
+        out = loaded_model.predict(image_sequence)
         print(out)
         print(np.argmax(out, axis=1))
 
-        response = np.array_str(np.argmax(out, axis=1))
-        return response
+        response = int(np.array(np.argmax(out, axis=1)))
+        
+        return classes[response]
+    
+    # out = model.predict(image)
+    # print(out)
+    # print(np.argmax(out, axis=1))
 
+    # response = np.array_str(np.argmax(out, axis=1))
+    # return response
 
 if __name__ == '__main__':
     app.run(debug=True)
