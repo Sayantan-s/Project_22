@@ -41,7 +41,7 @@ def load_model():
         init() is in load.py in model folder
     """
     model, graph = init()   
-    print("model_loaded")
+    print("model loaded")
 
     if model != None:
         model_is_loaded = True
@@ -56,7 +56,8 @@ def load_model():
     }
 
 
-def crop_and_save_image(img_path, write_img_path):
+def crop_and_save_image(img, img_path, write_img_path, img_name):
+    
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor(
         'E:\Project_22\model\shape_predictor_81_face_landmarks.dat')
@@ -85,16 +86,28 @@ def crop_and_save_image(img_path, write_img_path):
         roi = gray[y:y+h, x:x+w]
         roi = imutils.resize(roi, width=250, inter=cv2.INTER_CUBIC)
         # saving image to path
-        print('/images/' + write_img_path)
-        cv2.imwrite(
-            '/images/' + write_img_path, roi)
+        print(write_img_path)
+        cv2.imwrite(write_img_path, roi)
 
 
 @app.route('/predict/', methods=['GET', 'POST'])
 def predict():
     imgData = request.get_data()
-    crop_and_save_image(img_path="imgData", write_img_path="any_path")
-    image = imageio.imread('output.png', mode='L')
+    raw_directory = 'server/raw_images'
+    final_diretory = 'server/final_images'
+    filelist = os.listdir(raw_directory)
+    for img_name in filelist:
+        if img_name.startswith('color'):
+            image = imageio.imread(raw_directory + '/' + '' + img_name)
+            crop_and_save_image(image, raw_directory + '/' + '' + img_name,
+                                final_diretory + '/' + '' + img_name, img_name)
+            print("function running")
+
+    '''
+    output.png is the final image for model prediction
+    which is to be taken from final_image
+    '''
+    image = imageio.imread('output.png')
     image = resize(image, (MAX_WIDTH, MAX_HEIGHT))
     image = 255 * image
     image = np.expand_dims(image, axis=4)    
