@@ -15,8 +15,13 @@ import cv2  # run "pip install opencv-python"
 import imageio
 from imutils import face_utils
 
+
+model_name = "EF-3"
+models_dir = './model/models/'
+model_path = models_dir + model_name + '.json'
+model_weights_path = models_dir + model_name + '.h5'
 global graph, model
-MAX_WIDTH, MAX_HEIGHT = 64, 64
+MAX_WIDTH, MAX_HEIGHT, max_seq_length = 64, 64, 22
 classes = ['Begin', 'Choose', 'Connection', 'Navigation',
             'Next', 'Previous', 'Start', 'Stop', 'Hello', 'Web']
 
@@ -43,7 +48,7 @@ def load_model():
     model, graph = init()   
     print("model loaded")
 
-    if model != None:
+    if (model != None) and (graph != None):
         model_is_loaded = True
     
     if model_is_loaded:
@@ -96,6 +101,7 @@ def predict():
     raw_directory = 'server/raw_images'
     final_diretory = 'E:\Project_22\server\/final_image'
     filelist = os.listdir(raw_directory)
+    final_filelist = os.listdir(final_diretory)
     for img_name in filelist:
         if img_name.startswith('color'):
             image = imageio.v2.imread(raw_directory + '/' + '' + img_name)
@@ -104,22 +110,63 @@ def predict():
             print("function running")
 
     '''
-    output.png is the final image for model prediction
-    which is to be taken from final_image
+    converting frames into image_sequence for one word
     '''
-    image = imageio.imread('output.png')
-    image = resize(image, (MAX_WIDTH, MAX_HEIGHT))
-    image = 255 * image
-    image = np.expand_dims(image, axis=4)    
+    sequence = []
+    image_sequence = []
+    for image_name in final_filelist:
+        if image_name.startswith('color'):
+            image = imageio.v2.imread(final_diretory + '/' + image_name)
+            image = cv2.resize(image, (MAX_WIDTH, MAX_HEIGHT))
+            image = 255 * image
+            image = image.astype(np.uint8)
+            sequence.append(image)
+    pad_array = [np.zeros((MAX_WIDTH, MAX_HEIGHT))]
+    sequence.extend(pad_array * (max_seq_length - len(sequence)))
+    sequence = np.array(sequence)
+    image_sequence = np.array([sequence])
 
+    def normalize_it(X):
+        v_min = X.min(axis=(2, 3), keepdims=True)
+        v_max = X.max(axis=(2, 3), keepdims=True)
+        X = (X - v_min)/(v_max - v_min)
+        X = np.nan_to_num(X)
+        return X
+    
+    image_sequence = normalize_it(image_sequence)
+    image_sequence = np.expand_dims(image_sequence, axis=4)
+    print(image_sequence.shape)
+    
+    model, graph = init()
     with graph.as_default():
-        out = model.predict(image)
+        json_file = open(model_path, 'r')
+        loaded_model_json = json_file.read()
+        json_file.close()
+
+        # use Keras model_from_json to make a loaded model
+        loaded_model = model_from_json(loaded_model_json)
+
+        #load weights into new model
+        loaded_model.load_weights(model_weights_path)
+        print("Loaded Model from disk")
+
+        # compile and evaluate loaded model
+        opt = tf.keras.optimizers.Adam(learning_rate=0.0001)
+        loaded_model.compile(loss='categorical_crossentropy',
+                            optimizer=opt, metrics=['accuracy'])
+        out = loaded_model.predict(image_sequence)
         print(out)
         print(np.argmax(out, axis=1))
 
         response = np.array_str(np.argmax(out, axis=1))
         return response
+    
+    # out = model.predict(image)
+    # print(out)
+    # print(np.argmax(out, axis=1))
 
+    # response = np.array_str(np.argmax(out, axis=1))
+    # return response
 
 if __name__ == '__main__':
     app.run(debug=True)
