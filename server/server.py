@@ -6,7 +6,6 @@ from flask import Flask, render_template, request
 import numpy as np
 import keras.models
 import re
-
 import os
 import base64
 import os
@@ -18,6 +17,8 @@ from imutils import face_utils
 
 global graph, model
 MAX_WIDTH, MAX_HEIGHT = 64, 64
+classes = ['Begin', 'Choose', 'Connection', 'Navigation',
+            'Next', 'Previous', 'Start', 'Stop', 'Hello', 'Web']
 
 app = Flask(__name__)
 
@@ -29,7 +30,6 @@ def index_view():
 #     imgstr = re.search(b'base64,(.*)', imgData1).group(1)
 #     with open('output.png', 'wb') as output:
 #         output.write(base64.b64decode(imgstr))
-
 
 @app.route("/load_model")
 def load_model():
@@ -57,7 +57,7 @@ def load_model():
 
 
 def crop_and_save_image(img, img_path, write_img_path, img_name):
-    
+
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor(
         'E:\Project_22\model\shape_predictor_81_face_landmarks.dat')
@@ -94,11 +94,11 @@ def crop_and_save_image(img, img_path, write_img_path, img_name):
 def predict():
     imgData = request.get_data()
     raw_directory = 'server/raw_images'
-    final_diretory = 'server/final_images'
+    final_diretory = 'E:\Project_22\server\/final_image'
     filelist = os.listdir(raw_directory)
     for img_name in filelist:
         if img_name.startswith('color'):
-            image = imageio.imread(raw_directory + '/' + '' + img_name)
+            image = imageio.v2.imread(raw_directory + '/' + '' + img_name)
             crop_and_save_image(image, raw_directory + '/' + '' + img_name,
                                 final_diretory + '/' + '' + img_name, img_name)
             print("function running")
