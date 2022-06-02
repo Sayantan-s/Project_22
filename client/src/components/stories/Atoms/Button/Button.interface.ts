@@ -1,21 +1,9 @@
-import {
-  Colors,
-  Rounded,
-  Size,
-  Variants,
-} from "components/stories/types/Styles.types";
+import { TraditionalTypes } from "components/stories/types/Styles.types";
 import React from "react";
 import { PolymorphicComponentProps } from "../../types/Polymorphic.types";
-
-export interface BtnProps {
-  variant?: Variants | "glass";
-  color?: Colors;
-  rounded?: Rounded;
-  size?: Size;
+export interface BtnProps extends TraditionalTypes {
   isLoading?: boolean;
   isDisabled?: boolean;
-  outline?: boolean;
-  shadow?: boolean;
   loadingText?: "loading" | string;
   spinnerPlacement?: "end" | "start";
 }

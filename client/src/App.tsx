@@ -8,10 +8,11 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { IconButton, Stack, View } from "stories";
 import styled from "styled-components";
+import Timer from "./components/stories/Organisms/Timer";
 
 interface CameraConfig {
   status: "ready" | "loading" | "failed" | "initial" | "closed";
-  errorText: string | "Failed to start" | "User did'nt allow camera";
+  errorText: string;
 }
 
 function App() {
@@ -96,12 +97,11 @@ function App() {
       ?.drawImage(videoRef.current!, 0, 0, canvas.width, canvas.height);
 
     const base64ImageDataUrl = canvas.toDataURL("image/webp");
-
     console.log(base64ImageDataUrl);
   };
 
   return (
-    <View isParent>
+    <View isParent display="flex" alignItems="center" justify="center">
       <VideoPlayer>
         <Video autoPlay ref={videoRef} />
         <Canvas as="canvas" ref={cameraCanvasRef} />
@@ -131,6 +131,7 @@ function App() {
           />
         </PlayerControls>
       </VideoPlayer>
+      <Timer seconds={10} />
     </View>
   );
 }

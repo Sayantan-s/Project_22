@@ -23,7 +23,9 @@ export const Button = <C extends React.ElementType = "button">({
       <>
         <Loader
           color={color}
-          strength={variant === "default" || variant === "gradient" ? 50 : 600}
+          strength={
+            variant === "default" || variant === "gradient" ? "50" : "600"
+          }
           size={40}
           className="spinner"
         />

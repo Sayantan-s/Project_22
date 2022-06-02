@@ -22,7 +22,7 @@ export const Component = styled.div<Props>`
   }) => css`
     background-color: ${({ theme }) =>
       backgroundColor
-        ? theme.colors[backgroundColor][strength || 100]
+        ? theme.colors[backgroundColor][strength || "100"]
         : "none"};
 
     ${() =>

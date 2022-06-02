@@ -28,7 +28,9 @@ export const IconButton = forwardRef(
       {isLoading ? (
         <Loader
           color={color}
-          strength={variant === "default" || variant === "gradient" ? 50 : 600}
+          strength={
+            variant === "default" || variant === "gradient" ? "50" : "600"
+          }
           size={130}
           className="spinner"
         />
@@ -36,7 +38,9 @@ export const IconButton = forwardRef(
         <Icon
           size={size === "xs" ? "16" : "24"}
           color={color}
-          strength={variant === "default" || variant === "gradient" ? 50 : 600}
+          strength={
+            variant === "default" || variant === "gradient" ? "50" : "600"
+          }
         />
       )}
     </Component>

@@ -25,7 +25,7 @@ type AlignContent =
 
 type Wrap = "nowrap" | "wrap" | "wrap-reverse";
 
-type ViewProps = {
+interface ViewProps {
   isParent?: boolean;
   backgroundColor?: Colors;
   strength?: Strength;
@@ -35,7 +35,7 @@ type ViewProps = {
   alignItems?: AlignItems;
   alignContent?: AlignContent;
   wrap?: Wrap;
-};
+}
 
 export type Props<C extends React.ElementType = "div"> =
   PolymorphicComponentPropsWithRef<C, ViewProps>;
