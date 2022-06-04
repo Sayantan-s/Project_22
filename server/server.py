@@ -14,6 +14,7 @@ import dlib  # run "pip install dlib"
 import cv2  # run "pip install opencv-python"
 import imageio
 from imutils import face_utils
+import tensorflow as tf
 
 
 model_name = "EF-3"
@@ -144,7 +145,7 @@ def predict():
         json_file.close()
 
         # use Keras model_from_json to make a loaded model
-        loaded_model = model_from_json(loaded_model_json)
+        loaded_model = tf.keras.models.model_from_json(loaded_model_json)
 
         #load weights into new model
         loaded_model.load_weights(model_weights_path)
@@ -155,19 +156,19 @@ def predict():
         loaded_model.compile(loss='categorical_crossentropy',
                             optimizer=opt, metrics=['accuracy'])
         out = loaded_model.predict(image_sequence)
-        print(out)
-        print(np.argmax(out, axis=1))
-
-        response = int(np.array(np.argmax(out, axis=1)))
+        #getting percentage
+        percentage_list = []
+        for i in range(len(out[0])):
+            percentage_list.append("{0:.2%}".format(out[0][i]))
+        my_result = {classes[i]: percentage_list[i]
+                     for i in range(len(classes))}
         
-        return classes[response]
+        
+        return my_result
+        # print(np.argmax(out, axis=1))
+        # response = int(np.array(np.argmax(out, axis=1)))
+        # return classes[response]
     
-    # out = model.predict(image)
-    # print(out)
-    # print(np.argmax(out, axis=1))
-
-    # response = np.array_str(np.argmax(out, axis=1))
-    # return response
 
 if __name__ == '__main__':
     app.run(debug=True)
