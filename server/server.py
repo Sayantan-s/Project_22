@@ -163,7 +163,6 @@ def predict():
         my_result = {classes[i]: percentage_list[i]
                      for i in range(len(classes))}
         
-        
         return my_result
         # print(np.argmax(out, axis=1))
         # response = int(np.array(np.argmax(out, axis=1)))
