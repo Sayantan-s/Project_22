@@ -7,7 +7,7 @@
   ```
       git clone git@github.com:Sayantan-s/Project_22.git
   ```
-- Set up a `.gitignore` file and add whatever you find in this link --> [DEKH KYA RAHA HAE, COPY PASTE KAR](/.gitignore)
+- Set up a `.gitignore` file and add whatever you find in this link -> (/.gitignore)
 
 ## How to contribute
 ### **_Start how to contribute_**
